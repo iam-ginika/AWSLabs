@@ -1,0 +1,51 @@
+Step 1 
+In VScode terminal,
+Navigate to the folder with name "AWSLabs"
+Run command git clone https://github.com/awscloudessentials/intro-to-aws-lab.git (this will clone this repo into your local machine)
+Run command cd intro-to-aws-lab
+Run command ls -la to view content of local repo
+Copy Lab2.txt into the folder "AWSLabs"
+Delete the cloned repo
+
+Step2  (Create a Virtual Server)
+Login into your AWS Console 
+Create an EC2 instance with 
+Select your default VPC
+With the following  Inbound rule
+Type      Source
+SSH       Anywhere
+HTTP      Anywhere
+Select “Amazon Linux 2023 AMI “ under Application and OS Images
+Select “t3micro “ for instance type
+Key pair with name "Linux" and key file format ".pem"
+Download pem file into your local machine
+Create a Security Group with name “PublicSG” and give it any description you prefer
+
+Step3 (ssh into Server)
+On your local machine log into the server using the keypair downloaded into your local machine
+Navigate to the location of the pem key and copy it to your Desktop Directory. Then run the following commands
+chmod 400 <name of pem key>
+ssh -i <name of pem key> ec2user@<public-ip-address-of server>
+This gets you into the server
+
+Step4 (Set up page and nginx service)
+Run the following commands 
+sudo yum update -y
+sudo yum install -y nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+echo "Hello World from $(hostname -f)" | sudo tee /usr/share/nginx/html/index.html
+systemctl restart nginx
+
+On a fresh web page paste http://<public ip address of your Virtual machine>
+It should show Hello World from <public ip address of your Virtual machine>
+Share this http://<public ip address of your Virtual machine> on the WhatsApp group for confirmation
+Once confirmed, terminate the instance on you AWS Console
+
+Step 5 (Documentation)
+Modify and update every step you took to achieve the lab, that was not captured in the lab instruction in your local repo Lab2.txt file and save.
+On the terminal run command git add Lab2.txt
+git commit -m "Created a webserver using nginx service"
+Push to your github repo using the git push command
+
+
