@@ -92,13 +92,13 @@ Then launch the instance.
 Step3 
 On a fresh web page paste http://<public ip address of your Virtual machine>
 Share this http://<public ip address of your Virtual machine> on the WhatsApp group for confirmation
-Once confirmed, terminate the instance on you AWS Console
+Once confirmed, terminate the instance on you AWS Console.
 
 Step 4 (Documentation)
 Modify and update every step you took to achieve the lab, that was not captured in the lab instruction in your local repo Lab2.txt file and save.
 On the terminal run command git add Lab3.txt
 git commit -m “Added EC2 user data script for Apache web server setup"
-Push to your github repo
+Push to your github repo using the git push command
 
 
 
