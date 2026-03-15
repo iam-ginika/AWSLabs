@@ -1,0 +1,104 @@
+Step 1 
+In VScode terminal,
+Navigate to the folder with name "AWSLabs"
+Run command git clone https://github.com/awscloudessentials/intro-to-aws-lab.git (this will clone this repo into your local machine)
+Run command cd intro-to-aws-lab
+Run command ls -la to view content of local repo
+Copy Lab3.txt into the folder "AWSLabs"
+Delete the cloned repo
+
+Step2  (Create a Virtual Server)
+Login into your AWS Console 
+Create an EC2 instance with 
+Select your default VPC
+With the following  Inbound rule
+Type      Source
+SSH       Anywhere
+HTTP      Anywhere
+Select “Amazon Linux 2023 AMI “ under Application and OS Images
+Select “t3micro “ for instance type
+Key pair with name "Linux" and key file format ".pem"
+Download pem file into your local machine
+Create a Security Group with name “PublicSG” and give it any description you prefer
+Scroll down to the section with userdata copy and paste this:
+
+#!/bin/bash
+# User data script for Amazon Linux 2023
+# Installs Apache and serves a custom HTML page
+
+# Update system packages
+dnf update -y
+
+# Install Apache HTTP server
+dnf install -y httpd
+
+# Write a custom HTML page
+cat > /var/www/html/index.html << 'EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My EC2 Web Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px 60px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 { color: #232f3e; }
+        p  { color: #555; }
+        .badge {
+            display: inline-block;
+            background: #ff9900;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Hello from EC2! 🚀</h1>
+        <p>This page is served by Apache on Amazon Linux 2023.</p>
+        <span class="badge">Running on AWS</span>
+    </div>
+</body>
+</html>
+EOF
+
+# Enable httpd to start on reboot, then start it now
+systemctl enable httpd
+systemctl start httpd
+
+# Open a log entry so you can verify the script ran
+echo "User data script completed at $(date)" >> /var/log/user-data.log
+
+Then launch the instance.
+
+Step3 
+On a fresh web page paste http://<public ip address of your Virtual machine>
+Share this http://<public ip address of your Virtual machine> on the WhatsApp group for confirmation
+Once confirmed, terminate the instance on you AWS Console
+
+Step 4 (Documentation)
+Modify and update every step you took to achieve the lab, that was not captured in the lab instruction in your local repo Lab2.txt file and save.
+On the terminal run command git add Lab3.txt
+git commit -m “Added EC2 user data script for Apache web server setup"
+Push to your github repo
+
+
+
